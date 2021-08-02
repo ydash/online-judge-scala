@@ -12,7 +12,7 @@ class TwoSumTest extends LeetCodeSpec {
         (Array(3, 3), 6, Array(0, 1))
       )
     ) { (nums, target, expected) =>
-      TwoSum.twoSum(nums, target).mkString(",") shouldBe expected.mkString(",")
+      TwoSum.twoSum(nums, target) should contain theSameElementsAs expected
     }
   }
 }
