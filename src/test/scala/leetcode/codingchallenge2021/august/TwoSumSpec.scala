@@ -2,7 +2,7 @@ package leetcode.codingchallenge2021.august
 
 import leetcode.LeetCodeSpec
 
-class TwoSumTest extends LeetCodeSpec {
+class TwoSumSpec extends LeetCodeSpec {
   test("Test of Two Sum") {
     forAll(
       Table(
