@@ -2,27 +2,16 @@ package leetcode.codingchallenge2021.august
 
 import util.Node
 
-import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
+import scala.annotation.tailrec
 
 object NAryTreeLevelOrderTraversal {
   def levelOrder(root: Node): List[List[Int]] =
-    if (root == null) List()
-    else {
-      val answer = new ListBuffer[List[Int]]
-      val queue = new mutable.Queue[Node]()
+    if (root == null) List.empty
+    else traverse(List(root), List())
 
-      queue += root
-      while (queue.nonEmpty) {
-        val tmp = ListBuffer[Int]()
-        for (_ <- queue.indices) {
-          val node = queue.dequeue()
-          tmp += node.value
-          node.children.foreach(queue += _)
-        }
-        answer += tmp.toList
-      }
-
-      answer.toList
-    }
+  @tailrec
+  def traverse(nodeList: List[Node], acc: List[List[Int]]): List[List[Int]] = nodeList match {
+    case List() => acc.reverse
+    case _ => traverse(nodeList.flatMap(_.children), nodeList.map(_.value) :: acc)
+  }
 }
