@@ -7,10 +7,10 @@ object AddStrings {
 
   def adder(num1: String, num2: String): String =
     num1.reverse.zipAll(num2.reverse, '0', '0').foldLeft((List[Char](), 0)) { (acc, digits) =>
-      val (result, carryUp) = acc
+      val (lst, carryUp) = acc
       (digits._1 + digits._2 - '0' + carryUp).toChar match {
-        case n if '0' to '9' contains n => (n :: result, 0)
-        case n => ((n - 10).toChar :: result, 1)
+        case n if '0' to '9' contains n => (n :: lst, 0)
+        case n => ((n - 10).toChar :: lst, 1)
       }
-    }.pipe { case (acc, c) => (if (c > 0) '1' :: acc else acc).mkString }
+    }.pipe { case (l, c) => (if (c > 0) '1' :: l else l).mkString }
 }
