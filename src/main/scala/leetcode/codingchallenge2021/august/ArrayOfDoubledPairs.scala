@@ -1,13 +1,9 @@
 package leetcode.codingchallenge2021.august
 
 import scala.collection.mutable
-import scala.util.chaining.scalaUtilChainingOps
 
 object ArrayOfDoubledPairs {
-  def canReorderDoubled(arr: Array[Int]): Boolean = {
-    val (neg, pos) = arr.partition(_ < 0).pipe { case (n, p) => n.sortBy(-_) -> p.sorted }
-    isDoubled(neg) && isDoubled(pos)
-  }
+  def canReorderDoubled(arr: Array[Int]): Boolean = isDoubled(arr.sortBy(_.abs))
 
   private def isDoubled(arr: Array[Int]): Boolean = {
     val tmp = new mutable.HashMap[Int, Int]().withDefaultValue(0)
