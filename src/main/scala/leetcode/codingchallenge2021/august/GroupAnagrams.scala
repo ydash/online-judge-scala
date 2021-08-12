@@ -1,17 +1,11 @@
 package leetcode.codingchallenge2021.august
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 object GroupAnagrams {
   def groupAnagrams(strs: Array[String]): List[List[String]] = {
-    val map = new mutable.HashMap[String, ListBuffer[String]]()
-    strs.foreach { str =>
-      map.get(str.sorted) match {
-        case None => map += str.sorted -> ListBuffer(str)
-        case Some(buffer) => buffer += str
-      }
-    }
-    for ((_, buffer) <- map.toList) yield buffer.toList
+    val map = new mutable.HashMap[String, List[String]]().withDefaultValue(List.empty)
+    for (str <- strs; sortedStr = str.sorted) map += sortedStr -> (str :: map(sortedStr))
+    map.values.toList
   }
 }
