@@ -16,15 +16,16 @@ object PathSumII {
       stack.push((root.value, root, List(root.value)))
       while (stack.nonEmpty) {
         val (sum, current, lst) = stack.pop()
-        if (sum == targetSum && current.left == null && current.right == null) answer += lst.reverse
+        if (sum == targetSum && current.left == null && current.right == null)
+          answer += lst.reverse
         else {
           current.right match {
             case null => ()
-            case r => stack.push((sum + r.value, r, r.value :: lst))
+            case r    => stack.push((sum + r.value, r, r.value :: lst))
           }
           current.left match {
             case null => ()
-            case l => stack.push((sum + l.value, l, l.value :: lst))
+            case l    => stack.push((sum + l.value, l, l.value :: lst))
           }
         }
       }

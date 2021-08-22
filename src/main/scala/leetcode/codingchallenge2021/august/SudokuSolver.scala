@@ -5,11 +5,16 @@ object SudokuSolver {
     solver(board)
   }
 
-  def validate(board: Array[Array[Char]], row: Int, col: Int, x: Char): Boolean =
+  def validate(
+      board: Array[Array[Char]],
+      row: Int,
+      col: Int,
+      x: Char
+  ): Boolean =
     board.indices.forall { i =>
       board(row)(i) != x &&
-        board(i)(col) != x &&
-        board(3 * (row / 3) + i / 3)(3 * (col / 3) + i % 3) != x
+      board(i)(col) != x &&
+      board(3 * (row / 3) + i / 3)(3 * (col / 3) + i % 3) != x
     }
 
   def solver(board: Array[Array[Char]]): Boolean = {

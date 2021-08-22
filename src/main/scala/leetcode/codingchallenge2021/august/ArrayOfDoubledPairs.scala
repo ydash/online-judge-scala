@@ -12,8 +12,7 @@ object ArrayOfDoubledPairs {
       if (x % 2 == 0 && tmp(y) > 0) {
         tmp(y) -= 1
         if (tmp(y) == 0) tmp.remove(y)
-      }
-      else tmp(x) += 1
+      } else tmp(x) += 1
     }
     tmp.isEmpty
   }

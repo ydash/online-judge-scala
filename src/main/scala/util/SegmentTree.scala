@@ -10,7 +10,13 @@ trait SegmentTree {
 
 object SegmentTree {
 
-  case class Node(value: Int, left: Int, right: Int, leftNode: SegmentTree, rightNode: SegmentTree) extends SegmentTree {
+  case class Node(
+      value: Int,
+      left: Int,
+      right: Int,
+      leftNode: SegmentTree,
+      rightNode: SegmentTree
+  ) extends SegmentTree {
     override def sum(left: Int, right: Int): Int = {
       if (left > this.right || right < this.left) 0
       else if (left <= this.left && this.right <= right) this.value
@@ -19,10 +25,12 @@ object SegmentTree {
   }
 
   case class Leaf(value: Int, left: Int, right: Int) extends SegmentTree {
-    override def sum(left: Int, right: Int): Int = if ((left to right) contains this.left) this.value else 0
+    override def sum(left: Int, right: Int): Int =
+      if ((left to right) contains this.left) this.value else 0
   }
 
-  def apply(nums: Array[Int]): SegmentTree = SegmentTree(nums, 0, nums.length - 1)
+  def apply(nums: Array[Int]): SegmentTree =
+    SegmentTree(nums, 0, nums.length - 1)
 
   private def apply(nums: Array[Int], left: Int, right: Int): SegmentTree =
     if (left >= right) Leaf(nums(left), left, right)

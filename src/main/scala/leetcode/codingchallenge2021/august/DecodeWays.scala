@@ -11,7 +11,7 @@ object DecodeWays {
 
   @tailrec
   private def count(s: List[Char], prev: Char, a: Int, b: Int): Int = s match {
-    case Nil => b
+    case Nil                                                => b
     case c :: _ if c == '0' && !('1' to '2').contains(prev) => 0
     case c :: rest =>
       val x = if (isAlphabet(c)) b else 0

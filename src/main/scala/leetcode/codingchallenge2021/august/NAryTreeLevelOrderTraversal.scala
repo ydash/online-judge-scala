@@ -10,8 +10,10 @@ object NAryTreeLevelOrderTraversal {
     else traverse(List(root), List())
 
   @tailrec
-  def traverse(nodeList: List[Node], acc: List[List[Int]]): List[List[Int]] = nodeList match {
-    case List() => acc.reverse
-    case _ => traverse(nodeList.flatMap(_.children), nodeList.map(_.value) :: acc)
-  }
+  def traverse(nodeList: List[Node], acc: List[List[Int]]): List[List[Int]] =
+    nodeList match {
+      case List() => acc.reverse
+      case _ =>
+        traverse(nodeList.flatMap(_.children), nodeList.map(_.value) :: acc)
+    }
 }

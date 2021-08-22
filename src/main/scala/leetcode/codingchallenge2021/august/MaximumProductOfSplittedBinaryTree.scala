@@ -32,8 +32,12 @@ object MaximumProductOfSplittedBinaryTree {
   object TreeNode {
     val cache = new mutable.HashMap[TreeNode, Int]()
 
-    def sum(root: TreeNode): Int = cache.getOrElseUpdate(root, {
-      root.value + (if (root.left != null) sum(root.left) else 0) + (if (root.right != null) sum(root.right) else 0)
-    })
+    def sum(root: TreeNode): Int = cache.getOrElseUpdate(
+      root, {
+        root.value +
+          (if (root.left != null) sum(root.left) else 0) +
+          (if (root.right != null) sum(root.right) else 0)
+      }
+    )
   }
 }
