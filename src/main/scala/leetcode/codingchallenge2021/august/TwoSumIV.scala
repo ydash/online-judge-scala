@@ -2,21 +2,22 @@ package leetcode.codingchallenge2021.august
 
 import util.TreeNode
 
-import scala.collection.mutable
+import scala.annotation.tailrec
 
 object TwoSumIV {
-  def findTarget(root: TreeNode, k: Int): Boolean = {
-    val set = new mutable.HashSet[Int]()
-    val queue = mutable.Queue[TreeNode](root)
+  def findTarget(root: TreeNode, k: Int): Boolean = find(List(root), Set.empty, k)
 
-    while (queue.nonEmpty) {
-      val node = queue.dequeue()
-      if (set.contains(k - node.value)) return true
-      set += node.value
-      if (node.left != null) queue += node.left
-      if (node.right != null) queue += node.right
-    }
-
-    false
+  @tailrec
+  def find(lst: List[TreeNode], seen: Set[Int], target: Int): Boolean = lst match {
+    case Nil => false
+    case node :: rest =>
+      if (seen.contains(target - node.value)) true
+      else
+        (node.left, node.right) match {
+          case (null, null) => find(rest, seen + node.value, target)
+          case (null, r)    => find(r :: rest, seen + node.value, target)
+          case (l, null)    => find(l :: rest, seen + node.value, target)
+          case (l, r)       => find(l :: r :: rest, seen + node.value, target)
+        }
   }
 }
