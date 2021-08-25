@@ -5,15 +5,15 @@ import scala.annotation.tailrec
 object SumOfSquareNumbers {
   def judgeSquareSum(c: Int): Boolean = {
     @tailrec
-    def judge(a: Int): Boolean =
-      if (a < 0) false
+    def judge(a: Int, b: Int): Boolean =
+      if (a > b) false
       else {
-        val rest = c - a * a
-        val b = Math.sqrt(rest).toInt
-        if (rest == b * b) true
-        else judge(a - 1)
+        val x = a * a + b * b
+        if (x == c) true
+        else if (x < c) judge(a + 1, b)
+        else judge(a, b - 1)
       }
 
-    judge(Math.sqrt(c).floor.toInt)
+    judge(0, Math.sqrt(c).floor.toInt)
   }
 }
