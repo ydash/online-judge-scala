@@ -1,21 +1,18 @@
 package leetcode.codingchallenge2021.august
 
-import scala.annotation.tailrec
+import scala.collection.immutable.SortedMap
+import scala.util.chaining.scalaUtilChainingOps
 
 object MaximumProfitInJobScheduling {
   def jobScheduling(startTime: Array[Int], endTime: Array[Int], profit: Array[Int]): Int = {
-    val dp = new Array[Int](endTime.max + 1)
-
-    @tailrec
-    def loop(current: Int, indices: Seq[Int]): Int =
-      indices match {
-        case Nil => dp(current)
-        case i +: tail =>
-          for (j <- current + 1 until endTime(i)) dp(j) = dp(j - 1)
-          dp(endTime(i)) = dp(startTime(i)) + profit(i) max dp(endTime(i)) max dp(endTime(i) - 1)
-          loop(endTime(i), tail)
+    endTime.indices
+      .sortBy(endTime(_))
+      .foldLeft(SortedMap(0 -> 0)) { (dp, i) =>
+        dp.updated(
+          endTime(i),
+          dp.maxBefore(startTime(i) + 1).get._2 + profit(i) max dp.maxBefore(endTime(i) + 1).get._2
+        )
       }
-
-    loop(1, endTime.indices.sortBy(endTime(_)))
+      .pipe(_.last._2)
   }
 }
