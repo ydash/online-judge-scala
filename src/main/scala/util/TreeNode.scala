@@ -12,6 +12,8 @@ class TreeNode(
   var right: TreeNode = _right
 
   override def toString: String = s"TreeNode($value,$left,$right)"
+
+  override def equals(obj: Any): Boolean = obj.isInstanceOf[TreeNode] && this.toString == obj.toString
 }
 
 object TreeNode {
