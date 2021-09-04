@@ -18,7 +18,10 @@ object ErectFence {
       p +=: lower
     }
 
-    Set.from(upper ++ lower).toArray
+    val result = mutable.Set[Array[Int]]()
+    result ++= upper
+    result ++= lower
+    result.toArray
   }
 
   private val slope: (Array[Int], Array[Int]) => Double = { case (Array(x1, y1), Array(x2, y2)) =>
