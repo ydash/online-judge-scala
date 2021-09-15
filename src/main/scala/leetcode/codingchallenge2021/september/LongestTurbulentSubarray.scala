@@ -20,6 +20,4 @@ object LongestTurbulentSubarray {
       max max count
     }
 
-//  def isTurbulent(prev: Int, current: Int, next: Int): Boolean =
-//    (prev < current && current > next) || (prev > current && current < next)
 }
