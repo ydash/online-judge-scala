@@ -5,6 +5,7 @@ import leetcode.LeetCodeSpec
 class MaximumLengthOfAConcatenatedStringWithUniqueCharactersSpec extends LeetCodeSpec {
   private val table = Table(
     ("lst", "expected"),
+    (List("aab"), 0),
     (List("abc", "abd"), 3),
     (List("un", "iq", "ue"), 4),
     (List("cha", "r", "act", "ers"), 6),
