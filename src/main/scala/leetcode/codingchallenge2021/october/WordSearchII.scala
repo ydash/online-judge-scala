@@ -1,17 +1,20 @@
 package leetcode.codingchallenge2021.october
 
-import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.util.chaining.scalaUtilChainingOps
 
 object WordSearchII {
   def findWords(board: Array[Array[Char]], words: Array[String]): List[String] = {
-    val result = new mutable.HashSet[String]()
+    val result = new ListBuffer[String]()
 
     def backtracking(i: Int, j: Int, current: Trie): Unit =
       if (board(i)(j) != '.') {
         val c = board(i)(j)
         current.children(c - 'a').foreach { next =>
-          if (next.word.nonEmpty) result += next.word
+          if (next.word.nonEmpty) {
+            result += next.word
+            next.word = ""
+          }
           board(i)(j) = '.'
           if (i > 0) backtracking(i - 1, j, next)
           if (i < board.length - 1) backtracking(i + 1, j, next)
