@@ -1,51 +1,64 @@
 package leetcode.codingchallenge2021.october
 
+import scala.collection.mutable
 import scala.util.chaining.scalaUtilChainingOps
 
 object WordSearchII {
   def findWords(board: Array[Array[Char]], words: Array[String]): List[String] = {
+    val result = new mutable.HashSet[String]()
 
-    def backtracking(i: Int, j: Int, current: Trie.Node, currLen: Int): Unit =
-      if (currLen < 10 && i < board.length && i >= 0 && j < board(0).length && j >= 0 && board(i)(j) != '.') {
+    def backtracking(i: Int, j: Int, current: Trie): Unit =
+      if (board(i)(j) != '.') {
         val c = board(i)(j)
-        val ci = c - 'a'
-        val next = current.children(ci) match {
-          case Trie.Empty      => (new Trie.Node).tap(current.children(ci) = _)
-          case node: Trie.Node => node
+        current.children(c - 'a').foreach { next =>
+          if (next.word.nonEmpty) result += next.word
+          board(i)(j) = '.'
+          if (i > 0) backtracking(i - 1, j, next)
+          if (i < board.length - 1) backtracking(i + 1, j, next)
+          if (j > 0) backtracking(i, j - 1, next)
+          if (j < board.head.length - 1) backtracking(i, j + 1, next)
+          board(i)(j) = c
         }
-        board(i)(j) = '.'
-        backtracking(i - 1, j, next, currLen + 1)
-        backtracking(i + 1, j, next, currLen + 1)
-        backtracking(i, j - 1, next, currLen + 1)
-        backtracking(i, j + 1, next, currLen + 1)
-        board(i)(j) = c
       }
 
-    val trie = new Trie.Node
+    val trie = buildTrie(words)
     for (i <- board.indices; j <- board(i).indices) {
-      backtracking(i, j, trie, 0)
+      backtracking(i, j, trie)
     }
 
-    words.filter(trie.search).toList
+    result.toList
   }
 
-  abstract sealed class Trie
+  private def buildTrie(words: Array[String]): Trie = {
+    val root = new Trie
+    for (word <- words) root.insert(word)
+    root
+  }
 
-  object Trie {
-    case class Node() extends Trie {
-      val children: Array[Trie] = Array.fill[Trie]('z' - 'a' + 1)(Empty)
+  class Trie {
+    val children: Array[Option[Trie]] = Array.fill(26)(None)
+    var word = ""
 
-      def search(word: String): Boolean = {
-        var current = this
-        for (c <- word) {
-          current.children(c - 'a') match {
-            case Empty         => return false
-            case node @ Node() => current = node
-          }
+    def insert(word: String): Unit = {
+      var current = this
+      for (c <- word) {
+        current = current.children(c - 'a') match {
+          case Some(node) => node
+          case None       => (new Trie).tap(node => current.children(c - 'a') = Some(node))
         }
-        true
       }
+      current.word = word
     }
-    case object Empty extends Trie
+
+    def search(word: String): Boolean = {
+      var current = this
+      for (c <- word) {
+        current.children(c - 'a') match {
+          case None       => return false
+          case Some(node) => current = node
+        }
+      }
+      true
+    }
   }
 }
