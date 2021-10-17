@@ -2,19 +2,21 @@ package leetcode.codingchallenge2021.october
 
 import util.TreeNode
 
+import scala.collection.mutable
+
 object PathSumIII {
   def pathSum(root: TreeNode, targetSum: Int): Int = {
     var count = 0
-    def loop(node: TreeNode, sums: List[Int]): Unit = if (node != null) {
-      val lst = for (sum <- 0 :: sums) yield {
-        val s = node.value + sum
-        if (s == targetSum) count += 1
-        s
-      }
-      loop(node.left, lst)
-      loop(node.right, lst)
+    def dfs(node: TreeNode, sum: Int, prefix: mutable.Map[Int, Int]): Unit = if (node != null) {
+      val current = node.value + sum
+      count += prefix(current - targetSum)
+      prefix(current) += 1
+
+      dfs(node.left, current, prefix)
+      dfs(node.right, current, prefix)
+      prefix(current) -= 1
     }
-    loop(root, List())
+    dfs(root, 0, mutable.Map(0 -> 1).withDefaultValue(0))
     count
   }
 }
