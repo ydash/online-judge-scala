@@ -27,7 +27,7 @@ class IntMinStackSpec extends AnyFlatSpec with should.Matchers {
     val third = second.push(3)
     third.pop shouldBe (3, second)
   }
-  it should "get value which is pushed last time" in {
+  it should "get top value in LIFO order" in {
     val root: IntMinStack = Empty
     val first = root.push(1)
     val second = first.push(2)
