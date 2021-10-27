@@ -10,15 +10,14 @@ class IntMinStackSpec extends AnyFlatSpec with should.Matchers {
     Empty.push(42) shouldBe Node(42, Empty)
   }
   it should "produce NoSuchElementException when any method except `push` is invoked" in {
-    Empty.pop shouldBe a[NoSuchElementException]
-    Empty.top shouldBe a[NoSuchElementException]
-    Empty.getMin shouldBe a[NoSuchElementException]
-    Empty.value shouldBe a[NoSuchElementException]
+    a[NoSuchElementException] should be thrownBy Empty.pop
+    a[NoSuchElementException] should be thrownBy Empty.pop
+    a[NoSuchElementException] should be thrownBy Empty.pop
   }
 
   "An Node" should "push values in LIFO order" in {
     val root = Empty.push(42)
-    root.push(0) shouldBe Node(19, root)
+    root.push(0) shouldBe Node(0, root)
   }
   it should "pop values in LIFO order" in {
     val root: IntMinStack = Empty
