@@ -14,7 +14,7 @@ class MinStack() {
     n
   }
 
-  def top(): Int = root.value
+  def top(): Int = root.top
 
   def getMin(): Int = root.getMin
 }
@@ -24,7 +24,6 @@ trait IntMinStack {
   def pop: (Int, IntMinStack)
   def top: Int
   def getMin: Int
-  def value: Int
 }
 
 object IntMinStack {
@@ -39,8 +38,6 @@ object IntMinStack {
       case Empty      => n
       case node: Node => n min node.getMin
     }
-
-    override val value: Int = n
   }
 
   case object Empty extends IntMinStack {
@@ -51,7 +48,5 @@ object IntMinStack {
     override def top: Int = throw new NoSuchElementException()
 
     override def getMin: Int = throw new NoSuchElementException()
-
-    override def value: Int = throw new NoSuchElementException()
   }
 }
