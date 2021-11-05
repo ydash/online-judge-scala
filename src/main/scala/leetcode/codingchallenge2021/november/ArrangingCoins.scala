@@ -2,12 +2,8 @@ package leetcode.codingchallenge2021.november
 
 // 441. Arranging Coins
 object ArrangingCoins {
-  def arrangeCoins(n: Int): Int = {
-    var x = scala.math.sqrt(2L * n).ceil.toInt
-    while (n < aux(x)) x -= 1
-    x
-  }
-  private def aux(n: Int): Long = (n.toLong * (n + 1)) / 2
+
+  def arrangeCoins(n: Int): Int = (scala.math.sqrt(2 * n.toLong + 0.25) - 0.5).toInt
 
   def slowSolution(n: Int): Int = {
     var delta = 1
