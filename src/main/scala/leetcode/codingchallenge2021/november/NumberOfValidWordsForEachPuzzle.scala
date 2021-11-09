@@ -2,10 +2,12 @@ package leetcode.codingchallenge2021.november
 
 object NumberOfValidWordsForEachPuzzle {
   def findNumOfValidWords(words: Array[String], puzzles: Array[String]): List[Int] = {
-    val ws = words map word2bin
-    val ps = (puzzles map word2bin).zip(puzzles map { p => 1 << (p.head - 'a') })
-    for ((puzzle, firstLetter) <- ps.toList)
-      yield ws.count { word => (word | puzzle) == puzzle && (word & firstLetter) == firstLetter }
+    val wordBinList = words map word2bin
+    for (puzzle <- puzzles.toList) yield {
+      val pBin = word2bin(puzzle)
+      val flBin = 1 << (puzzle.head - 'a')
+      wordBinList.count { wordBin => (wordBin | pBin) == pBin && (wordBin & flBin) == flBin }
+    }
   }
 
   private def word2bin(word: String): Int = word.foldLeft(0) { (acc, c) =>
