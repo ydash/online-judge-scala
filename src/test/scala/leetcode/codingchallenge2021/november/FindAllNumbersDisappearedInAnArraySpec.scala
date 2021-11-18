@@ -11,7 +11,7 @@ class FindAllNumbersDisappearedInAnArraySpec extends LeetCodeSpec {
 
   test("Test of Find All Numbers Disappeared in an Array") {
     forAll(table) { (nums, expected) =>
-      FindAllNumbersDisappearedInAnArray.findDisappearedNumbers(nums) shouldBe expected
+      FindAllNumbersDisappearedInAnArray.findDisappearedNumbers(nums) should contain theSameElementsAs expected
     }
   }
 }

@@ -2,10 +2,10 @@ package leetcode.codingchallenge2021.november
 
 object FindAllNumbersDisappearedInAnArray {
   def findDisappearedNumbers(nums: Array[Int]): List[Int] = {
-    var result = Set(1 to nums.length: _*)
-    for (n <- nums) {
-      result = result - n
+    for (i <- nums.indices) {
+      val n = nums(i).abs - 1
+      if (nums(n) > 0) nums(n) *= -1
     }
-    result.toList
+    nums.indices.foldLeft(Nil: List[Int])((acc, i) => if (nums(i) > 0) i + 1 :: acc else acc)
   }
 }
