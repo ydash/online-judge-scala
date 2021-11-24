@@ -12,10 +12,10 @@ object P952 {
     }
 
     var ans = 1
-    val map = collection.mutable.Map[Int, Int]().withDefaultValue(0)
+    val count = collection.mutable.Map[Int, Int]().withDefaultValue(0)
     for (n <- nums) {
-      map(ds.findSet(n)) += 1
-      ans = ans max map(ds.findSet(n))
+      count(ds.findSet(n)) += 1
+      ans = ans max count(ds.findSet(n))
     }
     ans
   }
