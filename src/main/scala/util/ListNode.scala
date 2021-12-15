@@ -20,6 +20,8 @@ class ListNode(_x: Int = 0, _next: ListNode = null) {
     case ln: ListNode => this.toList == ln.toList
     case _            => false
   }
+
+  override def toString: String = this.toList.toString()
 }
 
 object ListNode {
