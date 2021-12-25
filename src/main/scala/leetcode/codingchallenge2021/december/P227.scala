@@ -2,8 +2,9 @@ package leetcode.codingchallenge2021.december
 
 object P227 {
   def calculate(s: String): Int = {
-    var stack: List[Int] = Nil
-    var op: Option[Char] = None
+    var result: Int = 0
+    var acc: Int = 0
+    var op = '+'
 
     var i = s.indexWhere(_ != ' ')
     while (i < s.length) {
@@ -14,20 +15,19 @@ object P227 {
           i += 1
         }
         op match {
-          case None      => ()
-          case Some('-') => num = -num
-          case Some('*') => num = stack.head * num; stack = stack.tail
-          case Some('/') => num = stack.head / num; stack = stack.tail
-          case _         => ()
+          case '+' => result = result + acc; acc = num
+          case '-' => result = result + acc; acc = -num
+          case '*' => acc = acc * num
+          case '/' => acc = acc / num
+          case _   => ()
         }
-        stack = num :: stack
       } else {
-        op = Option(s(i))
+        op = s(i)
         i += 1
       }
       while (i < s.length && s(i) == ' ') i += 1
     }
 
-    stack.sum
+    result + acc
   }
 }
