@@ -5,9 +5,8 @@ object P131 {
   def partition(s: String): List[List[String]] = {
     var result: List[List[String]] = Nil
     def loop(start: Int, acc: List[String]): Unit = {
-      if (start >= s.length) {
-        if (start == s.length) result = acc.reverse :: result
-      } else {
+      if (start == s.length) result = acc.reverse :: result
+      else {
         for (end <- start until s.length if isPalindrome(s, start, end)) {
           loop(end + 1, s.substring(start, end + 1) :: acc)
         }
