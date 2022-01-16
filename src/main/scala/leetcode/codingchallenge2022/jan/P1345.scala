@@ -23,7 +23,7 @@ object P1345 {
           queue += i + 1
           visited(i + 1) = true
         }
-        for (j <- i + 1 :: indicesOf(arr(i)) if !visited(j)) {
+        for (j <- indicesOf(arr(i)) if !visited(j)) {
           queue += j
           visited(j) = true
         }
