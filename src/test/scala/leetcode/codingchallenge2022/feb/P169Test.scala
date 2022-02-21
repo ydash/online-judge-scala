@@ -8,6 +8,7 @@ class P169Test extends LeetCodeSpec {
     (Array(42), 42),
     (Array(42, 42), 42),
     (Array(3, 2, 3), 3),
+    (Array(6, 5, 5), 5),
     (Array(2, 2, 1, 1, 1, 2, 2), 2)
   )
 
