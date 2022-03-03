@@ -1,4 +1,4 @@
-package leetcode.codingchallenge2022.feb
+package leetcode.codingchallenge2022.mar
 
 // 392. Is Subsequence
 object P392 {
