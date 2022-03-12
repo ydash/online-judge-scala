@@ -2,37 +2,35 @@ package leetcode.codingchallenge2022.mar
 
 // 138. Copy List with Random Pointer
 object P138 {
-  import collection.mutable.{Map => MutableMap}
-
   def copyRandomList(head: Node): Node =
     if (head == null) null
     else {
-      var current = head
-      val nodeStore = MutableMap[Node, Node]()
-      while (current != null) {
-        val newCurrent = getNode(nodeStore, current)
-        Option(current.next).foreach { next =>
-          val newNext = getNode(nodeStore, next)
-          newCurrent.next = newNext
-        }
-        Option(current.random).foreach { rand =>
-          val newRand = getNode(nodeStore, rand)
-          newCurrent.random = newRand
-        }
-
-        current = current.next
+      var pointer = head
+      while (pointer != null) {
+        val copy = new Node(pointer.value)
+        val next = pointer.next
+        pointer.next = copy
+        pointer.next.next = next
+        pointer = next
       }
-      nodeStore(head)
+      pointer = head
+      while (pointer != null) {
+        Option(pointer.random).foreach { random =>
+          pointer.next.random = random.next
+        }
+        pointer = pointer.next.next
+      }
+      val dummyHead = new Node(0)
+      var copyPointer = dummyHead
+      pointer = head
+      while (pointer != null) {
+        copyPointer.next = pointer.next
+        pointer.next = pointer.next.next
+        pointer = pointer.next
+        copyPointer = copyPointer.next
+      }
+      dummyHead.next
     }
-
-  private def getNode(map: MutableMap[Node, Node], key: Node): Node =
-    map.getOrElseUpdate(
-      key, {
-        val newNode = new Node(key.value)
-        map += (key -> newNode)
-        newNode
-      }
-    )
 
   class Node(var _value: Int) {
     var value: Int = _value
