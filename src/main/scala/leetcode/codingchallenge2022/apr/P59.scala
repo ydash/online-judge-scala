@@ -3,42 +3,18 @@ package leetcode.codingchallenge2022.apr
 // 59. Spiral Matrix II
 object P59 {
   def generateMatrix(n: Int): Array[Array[Int]] = {
-    def get(arr: Array[Array[Int]], i: Int, j: Int): Int = arr.lift(i).flatMap(_.lift(j)).getOrElse(-1)
-
     val matrix = Array.ofDim[Int](n, n)
-    var current = 1
-    val lim = n * n
-    var i = 0
-    var j = 0
-    while (current <= lim) {
-      while (get(matrix, i, j) == 0) {
-        matrix(i)(j) = current
-        current += 1
-        j += 1
+    var i, j = 0
+    var (di, dj) = (0, 1)
+    for (x <- 1 to n * n) {
+      matrix(i)(j) = x
+      if (matrix.lift(i + di).flatMap(_.lift(j + dj)).getOrElse(-1) != 0) {
+        val tmp = di
+        di = dj
+        dj = -tmp
       }
-      j -= 1
-      i += 1
-      while (get(matrix, i, j) == 0) {
-        matrix(i)(j) = current
-        current += 1
-        i += 1
-      }
-      i -= 1
-      j -= 1
-      while (get(matrix, i, j) == 0) {
-        matrix(i)(j) = current
-        current += 1
-        j -= 1
-      }
-      j += 1
-      i -= 1
-      while (get(matrix, i, j) == 0) {
-        matrix(i)(j) = current
-        current += 1
-        i -= 1
-      }
-      i += 1
-      j += 1
+      i += di
+      j += dj
     }
     matrix
   }
