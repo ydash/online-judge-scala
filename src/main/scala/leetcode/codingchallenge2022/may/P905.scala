@@ -1,4 +1,4 @@
-package leetcode.codingchallenge2022.apr
+package leetcode.codingchallenge2022.may
 
 // 905. Sort Array By Parity
 object P905 {
