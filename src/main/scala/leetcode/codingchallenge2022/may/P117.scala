@@ -3,19 +3,24 @@ package leetcode.codingchallenge2022.may
 // 117. Populating Next Right Pointers in Each Node II
 object P117 {
   def connect(root: Node): Node = {
-    val queue = collection.mutable.Queue[Node](root)
-    while (queue.nonEmpty) {
-      var prev: Node = null
-      for (_ <- queue.indices) {
-        val current = queue.dequeue()
-        if (prev != null) {
-          prev.next = current
+    var parent = root
+    while (parent != null) {
+      var current: Node = null
+      var nextHead: Node = null
+      while (parent != null) {
+        if (parent.left != null) {
+          if (current != null) current.next = parent.left
+          else nextHead = parent.left
+          current = parent.left
         }
-        if (current != null) {
-          queue.enqueue(current.left, current.right)
-          prev = current
+        if (parent.right != null) {
+          if (current != null) current.next = parent.right
+          else nextHead = parent.right
+          current = parent.right
         }
+        parent = parent.next
       }
+      parent = nextHead
     }
     root
   }
