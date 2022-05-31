@@ -8,7 +8,8 @@ class P1461Test extends LeetCodeSpec {
     ("00110110", 2, true),
     ("0", 1, false),
     ("0110", 1, true),
-    ("0110", 2, false)
+    ("0110", 2, false),
+    ("00110", 2, true)
   )
 
   test("Test of Check If a String Contains All Binary Codes of Size K") {
